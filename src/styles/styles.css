@@ -1,0 +1,23 @@
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.Chat {
+  display: flex;
+  flex-direction: row;
+  height: 40rem;
+  width: 60rem;
+}
+
+.Messages {
+  width: 65%;
+  height: 100%;
+  border-style: solid;
+}
+
+.Lobby {
+  width: 35%;
+  height: 100%;
+  border-style: solid;
+}
