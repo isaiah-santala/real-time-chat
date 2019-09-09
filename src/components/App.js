@@ -3,16 +3,22 @@ import Messages from './Messages'
 import Lobby from './Lobby'
 import '../styles/styles.css'
 
-import exampleMessages from '../example'
-
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      messages: exampleMessages
+      messages: []
     }
   }
+
+  componentDidMount = () => this.fetchMessages()
+
+  fetchMessages = () =>
+    fetch('http://localhost:3001/messages')
+    .then(messages => messages.json())
+    .then(messages => messages.data)
+    .then(messages => this.setState({ messages }))
 
   render = () => 
     <div className="App">

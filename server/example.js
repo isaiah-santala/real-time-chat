@@ -1,4 +1,4 @@
-const exampleMessages = [{
+exports.data = [{
   id: 1,
   name: 'Bob',
   message: 'Some kind of important message about something I wanted to tell you about',
@@ -18,5 +18,3 @@ const exampleMessages = [{
   name: 'Jazz',
   message: 'YOYOYOYOYOYOYOYO'
 }]
-
-export default exampleMessages
