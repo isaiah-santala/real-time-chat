@@ -14,7 +14,7 @@ class Messages extends Component {
   render = () => 
     <div className="Messages">
       <Display messages={this.props.messages}/>
-      <Write/>
+      <Write sendMessage={this.props.sendMessage}/>
     </div>
 } 
 

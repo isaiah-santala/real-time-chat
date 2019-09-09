@@ -24,6 +24,13 @@
 
 .Display {
   padding: 1rem;
+  height: 82%;
+}
+
+.Write {
+  height: 7%;
+  display: flex;
+  justify-content: center;
 }
 
 .message {
@@ -38,4 +45,9 @@
 .m-name {
   height: 1rem;
   margin-right: 1rem;
+}
+
+.Write input {
+  width: 65%;
+  font-size: 1.25rem;
 }
