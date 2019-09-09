@@ -21,3 +21,21 @@
   height: 100%;
   border-style: solid;
 }
+
+.Display {
+  padding: 1rem;
+}
+
+.message {
+  margin-top: 2rem; 
+  display: flex;
+  flex-direction: row;
+  width: 20rem;
+  border-style: solid;
+  padding: 0.5rem;
+}
+
+.m-name {
+  height: 1rem;
+  margin-right: 1rem;
+}

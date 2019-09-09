@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Messages from './Messages'
 import Lobby from './Lobby'
 import '../styles/styles.css'
 
-function App() {
-  return (
+import exampleMessages from '../example'
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      messages: exampleMessages
+    }
+  }
+
+  render = () => 
     <div className="App">
       <div className="Chat">
-        <Messages></Messages>
-        <Lobby></Lobby>
+        <Messages messages={this.state.messages}/>
+        <Lobby/>
       </div>
     </div>
-  )
 }
+
+
 
 export default App;

@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { Component } from 'react'
+import Write from './Write'
+import Display from './Display'
 
-const Messages = () => 
-  <div className="Messages"></div>
+class Messages extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+
+    }
+  }
+
+  render = () => 
+    <div className="Messages">
+      <Display messages={this.props.messages}/>
+      <Write/>
+    </div>
+} 
 
 export default Messages
