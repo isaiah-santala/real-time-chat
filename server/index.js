@@ -3,10 +3,9 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 
 const cors = require('cors')
-const bodyParser = require('body-parser')
 const { messageIsNotValid } = require('./serverFns')
 
-const { data } = require('./example')
+const data = []
 
 app.use(cors())
 
@@ -20,8 +19,13 @@ io.on('connect', (socket) => {
 
   socket.on('new message', message => {
     console.log('posting message: ' + message)
-    data.push(JSON.parse(message))
+    const parsedMessage = JSON.parse(message)
+    console.log(parsedMessage)
+    if (messageIsNotValid(parsedMessage.message)) return socket.emit('invalid message')
+
+    data.push(parsedMessage)
     socket.emit('new messages', data)
+    socket.broadcast.emit('new messages', data)
   })
 
   socket.on('disconnect', () => console.log('a user has disconnected'))
