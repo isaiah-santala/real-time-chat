@@ -1,42 +1,30 @@
 import React, { Component } from 'react'
 import Messages from './Messages'
 import Lobby from './Lobby'
-import '../styles/styles.css'
 
-const url = 'http://localhost:3001'
+import '../styles/styles.css'
+import { subscribeToMessages, postMessage } from '../api'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      id: 1,
-      name: 'Bob',
+      id: 0,
+      name: 'Thomas',
       messages: []
     }
+
+    subscribeToMessages(messages => this.setState({ messages }))
   }
 
-  componentDidMount = () => this.fetchMessages()
-
-  fetchMessages = () =>
-    fetch(url + '/messages')
-    .then(messages => messages.json())
-    .then(messages => this.setState({ messages }))
-
-  sendMessage = message => 
-    fetch(url + '/messages/create', {
-      method: 'POST',
-      body: JSON.stringify({
-        id: this.state.id,
-        name: this.state.name,
-        message
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(() => this.fetchMessages())
-    .catch(err => console.log('err posting message' + err))
+  sendMessage = message => {
+    postMessage(JSON.stringify({
+      id: this.state.id,
+      name: this.state.name,
+      message: message
+    }))
+  }
 
   render = () => 
     <div className="App">

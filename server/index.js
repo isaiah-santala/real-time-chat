@@ -1,37 +1,30 @@
-const express = require('express')
-const app = express()
+const app = require('express')()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
 
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const { messageIsNotValid } = require('./serverFns')
 
 const { data } = require('./example')
-const PORT = 3001
 
 app.use(cors())
-app.use(bodyParser.json())
 
-app.get('/messages', (req, res) => {
-  res.status(200).send(data)
+io.on('connect', (socket) => {
+  console.log('a user has connected')
+
+  socket.on('subscribeToMessages', () => {
+    console.log('a user is subscribing to messages')
+    socket.emit('new messages', data)
+  })
+
+  socket.on('new message', message => {
+    console.log('posting message: ' + message)
+    data.push(JSON.parse(message))
+    socket.emit('new messages', data)
+  })
+
+  socket.on('disconnect', () => console.log('a user has disconnected'))
 })
 
-app.post('/messages/create', (req, res) => {
-  if (messageIsNotValid(req.body.message)) return res.status(422).send()
-
-  data.push(req.body)
-  res.status(201).send()
-})
-
-app.listen(PORT, () => console.log('...listening on port:' + PORT))
-
-// var express = require('express');
-// var app = express();
-
-// // app.use/routes/etc...
-
-// var server = app.listen(3033);
-// var io = require('socket.io').listen(server);
-
-// io.sockets.on('connection', function (socket) {
-//   ...
-// });
+http.listen(3001, () => console.log('listening on *:3000'))
