@@ -21,7 +21,6 @@ class App extends Component {
   fetchMessages = () =>
     fetch(url + '/messages')
     .then(messages => messages.json())
-    .then(messages => messages.data)
     .then(messages => this.setState({ messages }))
 
   sendMessage = message => 
@@ -36,7 +35,7 @@ class App extends Component {
         'Content-Type': 'application/json'
       }
     })
-    .then(this.fetchMessages())
+    .then(() => this.fetchMessages())
     .catch(err => console.log('err posting message' + err))
 
   render = () => 

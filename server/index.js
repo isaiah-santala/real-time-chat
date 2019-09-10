@@ -5,7 +5,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const { messageIsNotValid } = require('./serverFns')
 
-const data = require('./example')
+const { data } = require('./example')
 const PORT = 3001
 
 app.use(cors())
@@ -16,11 +16,22 @@ app.get('/messages', (req, res) => {
 })
 
 app.post('/messages/create', (req, res) => {
-  console.log(req.body)
   if (messageIsNotValid(req.body.message)) return res.status(422).send()
 
-  data.data.push(req.body)
+  data.push(req.body)
   res.status(201).send()
 })
 
 app.listen(PORT, () => console.log('...listening on port:' + PORT))
+
+// var express = require('express');
+// var app = express();
+
+// // app.use/routes/etc...
+
+// var server = app.listen(3033);
+// var io = require('socket.io').listen(server);
+
+// io.sockets.on('connection', function (socket) {
+//   ...
+// });
