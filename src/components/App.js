@@ -20,7 +20,7 @@ class App extends Component {
 
   sendMessage = message => {
     postMessage(JSON.stringify({
-      name: this.state.username,
+      username: this.state.username,
       message: message
     }))
   }

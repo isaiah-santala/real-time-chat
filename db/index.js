@@ -13,8 +13,9 @@ exports.getAllMessages = (cb) => {
 }
 
 exports.postMessage = (data, cb) => {
-  const text = `INSERT INTO messages(username, message,) VALUES ('${data.username}', '${data.message}')`
-  Messages.query(text, (err, response) => {
+  const text = 'INSERT INTO messages(username, message) VALUES($1, $2)'
+  const values = [data.username, data.message]
+  Messages.query(text, values, (err, response) => {
       if (err) return cb(err)
       return cb(null, response)
   })

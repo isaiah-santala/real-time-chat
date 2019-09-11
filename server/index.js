@@ -6,8 +6,6 @@ const cors = require('cors')
 const { messageIsNotValid } = require('./serverFns')
 const { postMessage, getAllMessages } = require('../db/index')
 
-const data = []
-
 app.use(cors())
 
 io.on('connect', (socket) => {
@@ -29,7 +27,7 @@ io.on('connect', (socket) => {
     if (messageIsNotValid(parsedMessage.message)) return socket.emit('invalid message')
 
     postMessage(parsedMessage, (err, response) => {
-      if (err) return console.log(err)
+      if (err) return console.log('err while posting to database err:', err)
       console.log('successfully saved messages to database')
 
       getAllMessages((err, response) => {
@@ -46,4 +44,5 @@ io.on('connect', (socket) => {
   socket.on('disconnect', () => console.log('a user has disconnected'))
 })
 
-http.listen(3001, () => console.log('listening on *:3000'))
+const port = 3001
+http.listen(port, () => console.log('...listening on port:' + port))
