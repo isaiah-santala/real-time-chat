@@ -4,6 +4,7 @@ const io = require('socket.io')(http)
 
 const cors = require('cors')
 const { messageIsNotValid } = require('./serverFns')
+const { postMessage, getAllMessages } = require('../db/index')
 
 const data = []
 
@@ -14,7 +15,11 @@ io.on('connect', (socket) => {
 
   socket.on('subscribeToMessages', () => {
     console.log('a user is subscribing to messages')
-    socket.emit('new messages', data)
+    getAllMessages((err, response) => {
+      if (err) return console.log(err)
+      socket.emit('new messages', response.rows)
+      console.log('messages succefully retrieved from db')
+    })
   })
 
   socket.on('new message', message => {
@@ -23,9 +28,19 @@ io.on('connect', (socket) => {
     console.log(parsedMessage)
     if (messageIsNotValid(parsedMessage.message)) return socket.emit('invalid message')
 
-    data.push(parsedMessage)
-    socket.emit('new messages', data)
-    socket.broadcast.emit('new messages', data)
+    postMessage(parsedMessage, (err, response) => {
+      if (err) return console.log(err)
+      console.log('successfully saved messages to database')
+
+      getAllMessages((err, response) => {
+        if (err) return console.log(err)
+        socket.emit('new messages', response.rows)
+        socket.broadcast.emit('new messages', response.rows)
+      })
+    })
+    // data.push(parsedMessage)
+    // socket.emit('new messages', data)
+    // socket.broadcast.emit('new messages', data)
   })
 
   socket.on('disconnect', () => console.log('a user has disconnected'))

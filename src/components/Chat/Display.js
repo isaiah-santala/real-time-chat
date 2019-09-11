@@ -5,7 +5,7 @@ const Display = (props) =>
     {
       props.messages.map((e, i) =>
         <div className="message" key={i}>
-          <div className="m-name">{e.name}</div>
+          <div className="m-name">{e.username}:</div>
           <div className="m-message">{e.message}</div>
         </div>
       )

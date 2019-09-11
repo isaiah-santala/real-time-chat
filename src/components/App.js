@@ -11,8 +11,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      id: 0,
-      name: 'Thomas',
+      username: 'Thomas',
       messages: []
     }
 
@@ -21,8 +20,7 @@ class App extends Component {
 
   sendMessage = message => {
     postMessage(JSON.stringify({
-      id: this.state.id,
-      name: this.state.name,
+      name: this.state.username,
       message: message
     }))
   }
@@ -30,10 +28,10 @@ class App extends Component {
   render = () => 
     <div className="App">
       <Login></Login>
-      {/* <Chat 
+      <Chat 
         messages={this.state.messages}
         sendMessage={this.sendMessage}
-      /> */}
+      />
     </div>
 }
 
