@@ -1,0 +1,134 @@
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.inputs {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.25rem;
+  border-style: solid;
+  height: 17rem;
+  width: 20rem;
+  display: flex;
+}
+
+.login-title {
+  color: #ffffff;
+  border-color: black;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 20rem;
+  background-color: #0069ed;
+  font-size: 2rem;
+  border-style: solid;
+  margin-bottom: 0.5rem;
+}
+
+.inputs label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.inputs input {
+  height: 1.5rem;
+  width: 15rem;
+  font-size: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  border-style: solid;
+  width: 20rem;
+  height: 3rem;
+  background-color: #0069ed;
+}
+
+.buttons button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background: #0069ed;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.buttons button:hover,
+button:focus {
+    background: #0053ba;
+}
+
+.buttons button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+.buttons button:active {
+    transform: scale(0.99);
+}
+
+
+.Chat {
+  display: flex;
+  flex-direction: row;
+  height: 40rem;
+  width: 60rem;
+}
+
+.Messages {
+  width: 65%;
+  height: 100%;
+  border-style: solid;
+}
+
+.Lobby {
+  width: 35%;
+  height: 100%;
+  border-style: solid;
+}
+
+.Display {
+  padding: 1rem;
+  height: 82%;
+}
+
+.Write {
+  height: 7%;
+  display: flex;
+  justify-content: center;
+}
+
+.message {
+  margin-top: 2rem; 
+  display: flex;
+  flex-direction: row;
+  width: 20rem;
+  border-style: solid;
+  padding: 0.5rem;
+}
+
+.m-name {
+  height: 1rem;
+  margin-right: 1rem;
+}
+
+.Write input {
+  width: 65%;
+  font-size: 1.25rem;
+}
+

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Messages from './Messages'
-import Lobby from './Lobby'
+import '../styles.css'
 
-import '../styles/styles.css'
+import Login from './Login/Login'
+import Chat from './Chat/Chat'
+
 import { subscribeToMessages, postMessage } from '../api'
 
 class App extends Component {
@@ -28,13 +29,11 @@ class App extends Component {
 
   render = () => 
     <div className="App">
-      <div className="Chat">
-        <Messages 
-          messages={this.state.messages}
-          sendMessage={this.sendMessage}
-        />
-        <Lobby/>
-      </div>
+      <Login></Login>
+      {/* <Chat 
+        messages={this.state.messages}
+        sendMessage={this.sendMessage}
+      /> */}
     </div>
 }
 
