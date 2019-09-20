@@ -1,12 +1,12 @@
 const { Pool } = require('pg')
 const { config } = require('./config')
 
-const Messages = new Pool(config)
+const Chat = new Pool(config)
 
-Messages.connect()
+Chat.connect()
 
 exports.getAllMessages = (cb) => {
-  Messages.query('SELECT username, message FROM messages', (err, data) => {
+  Chat.query('SELECT username, message FROM messages', (err, data) => {
     if (err) return cb(err)
     return cb(null, data)
   })
@@ -15,8 +15,18 @@ exports.getAllMessages = (cb) => {
 exports.postMessage = (data, cb) => {
   const text = 'INSERT INTO messages(username, message) VALUES($1, $2)'
   const values = [data.username, data.message]
-  Messages.query(text, values, (err, response) => {
-      if (err) return cb(err)
-      return cb(null, response)
+  queryDB(text, values, cb)
+}
+
+exports.postCredentials = (credentials, cb) => {
+  const text = 'INSERT INTO users(username, password) VALUES($1, $2)'
+  const values = [credentials.username, credentials.password]
+  queryDB(text, values, cb)
+}
+
+function queryDB(text, values, cb) {
+  Chat.query(text, values, (err, response) => {
+    if (err) return cb(err)
+    return cb(null, response)
   })
 }

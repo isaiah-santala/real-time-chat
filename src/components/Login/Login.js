@@ -1,52 +1,30 @@
 import React, { Component } from 'react'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 class Login extends Component {
   constructor(props) {
     super(props)
-
+    
     this.state = {
-      username: '',
-      password: ''
+      view: 'LOGIN'
     }
   }
 
-  handleLogin = () => {
-    
-  }
-
-  handleChange = (e) => {
-    const {id, value} = e.target
-    this.setState({
-      [id]: value
-    })
-  }
+  chandView = view => this.setState({ view })
 
   render = () => 
     <div className="Login">
-      <form onSubmit={this.handleLogin}>
-        <div className="inputs">
-        <div className="login-title">Sign In</div>
-          <label htmlFor="username">username</label>
-          <input 
-            id='username'
-            value={this.state.username}
-            onChange={this.handleChange}
-          ></input>
-          
-          <label htmlFor="password">password</label>
-          <input 
-            id="password" 
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          ></input>
-        </div>
-
-        <div className="buttons">
-          {/* <button>create account</button> */}
-          <button type="submit">login</button>
-        </div>
-      </form>
+      {this.state.view === 'LOGIN' &&
+        <SignIn 
+          handleLogin={this.props.handleLogin}
+          chandView={this.chandView}
+        />}
+      {this.state.view === 'SIGNUP' && 
+        <SignUp 
+          handleSignUp={this.props.handleSignUp}
+          chandView={this.chandView}
+        />}
     </div>
 }
 

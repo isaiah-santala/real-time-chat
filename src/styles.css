@@ -10,9 +10,9 @@
   align-items: center;
   font-size: 1.25rem;
   border-style: solid;
-  height: 17rem;
   width: 20rem;
   display: flex;
+  padding-bottom: 10%; 
 }
 
 .login-title {

@@ -1,10 +1,11 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+const bcrypt = require('bcrypt')
 
 const cors = require('cors')
 const { messageIsNotValid } = require('./serverFns')
-const { postMessage, getAllMessages } = require('../db/index')
+const { postMessage, getAllMessages, postCredentials } = require('../db/index')
 
 app.use(cors())
 
@@ -27,8 +28,8 @@ io.on('connect', (socket) => {
     if (messageIsNotValid(parsedMessage.message)) return socket.emit('invalid message')
 
     postMessage(parsedMessage, (err, response) => {
-      if (err) return console.log('err while posting to database err:', err)
-      console.log('successfully saved messages to database')
+      if (err) return console.log('err while posting to db, err:', err)
+      console.log('successfully saved messages to db')
 
       getAllMessages((err, response) => {
         if (err) return console.log(err)
@@ -36,9 +37,21 @@ io.on('connect', (socket) => {
         socket.broadcast.emit('new messages', response.rows)
       })
     })
-    // data.push(parsedMessage)
-    // socket.emit('new messages', data)
-    // socket.broadcast.emit('new messages', data)
+  })
+
+  socket.on('new login', credentials => {
+    console.log('logging in new user')
+    let parsedCredentials = JSON.parse(credentials)
+
+    bcrypt.hash(parsedCredentials.password, 10, (err, hash) => {
+      if (err) return console.log(err)
+      parsedCredentials.password = hash
+
+      postCredentials(parsedCredentials, (err, response) => {
+        if (err) return console.log('err while posting credentials to db, err:' + err)
+        console.log('successfully saved user credentials to db')
+      })
+    })
   })
 
   socket.on('disconnect', () => console.log('a user has disconnected'))

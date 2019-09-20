@@ -13,4 +13,8 @@ function postMessage(data) {
   socket.emit('new message', data)
 }
 
-export { subscribeToMessages, postMessage }
+function postLogin(data) {
+  socket.emit('new login', data)
+}
+
+export { subscribeToMessages, postMessage, postLogin }

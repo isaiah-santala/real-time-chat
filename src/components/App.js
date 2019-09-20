@@ -4,7 +4,7 @@ import '../styles.css'
 import Login from './Login/Login'
 import Chat from './Chat/Chat'
 
-import { subscribeToMessages, postMessage } from '../api'
+import { subscribeToMessages, postMessage, postLogin } from '../api'
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +18,9 @@ class App extends Component {
     subscribeToMessages(messages => this.setState({ messages }))
   }
 
+  handleLogin = credentials => console.log(credentials)
+  handleSignUp = credentials => console.log(credentials)
+
   sendMessage = message => {
     postMessage(JSON.stringify({
       username: this.state.username,
@@ -27,11 +30,14 @@ class App extends Component {
 
   render = () => 
     <div className="App">
-      <Login></Login>
-      <Chat 
+      <Login 
+        handleLogin={this.handleLogin}
+        handleSignUp={this.handleSignUp}
+      ></Login>
+      {/* <Chat 
         messages={this.state.messages}
         sendMessage={this.sendMessage}
-      />
+      /> */}
     </div>
 }
 
