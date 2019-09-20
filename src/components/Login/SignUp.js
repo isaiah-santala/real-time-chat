@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { checkIfUsernameIsValid } from '../../api'
+
 class SignUp extends Component {
   constructor(props) {
     super(props)
@@ -7,15 +9,23 @@ class SignUp extends Component {
     this.state = {
       username: '',
       password1: '',
-      password2: ''
+      password2: '',
+      usernameIsValid: true
     }
   }
 
+  usernameIsValid = () => this.setState({ usernameIsValid: true })
 
   handleChange = e => {
     const { id, value } = e.target
-    this.setState({
-      [id]: value
+
+    if (id === 'username') this.setState({
+      [id]: value,
+      usernameIsValid: false
+    }, () => checkIfUsernameIsValid(this.state.username, this.usernameIsValid))
+
+    else this.setState({
+      [id]: value,
     })
   }
 
@@ -24,11 +34,14 @@ class SignUp extends Component {
     else this.props.handleSignUp(credentials)
   }
 
-
   render = () =>
     <form onSubmit={e => {
       e.preventDefault()
-      this.handleSubmit(this.state)
+      if (!this.state.usernameIsValid) alert('username taken')
+      else this.handleSubmit({
+        username: this.state.username,
+        password: this.state.password1
+      })
     }}>
       <div className="inputs">
         <div className="login-title">Sign Up</div>
@@ -36,6 +49,7 @@ class SignUp extends Component {
         <input
           required
           id='username'
+          className={!this.state.usernameIsValid && 'invalid-input' || null}
           value={this.state.username}
           onChange={this.handleChange}
         ></input>

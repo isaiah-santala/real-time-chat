@@ -24,9 +24,16 @@ exports.postCredentials = (credentials, cb) => {
   queryDB(text, values, cb)
 }
 
+exports.selectByUsername = (username, cb) => {
+  const text = 'SELECT * FROM users WHERE username = $1'
+  const values = [username]
+  queryDB(text, values, cb)
+}
+
 function queryDB(text, values, cb) {
   Chat.query(text, values, (err, response) => {
     if (err) return cb(err)
     return cb(null, response)
   })
 }
+

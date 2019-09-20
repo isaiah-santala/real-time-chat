@@ -2,15 +2,29 @@ const app = require('express')()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const cors = require('cors')
 const { messageIsNotValid } = require('./serverFns')
-const { postMessage, getAllMessages, postCredentials } = require('../db/index')
+const { postMessage, getAllMessages, postCredentials, selectByUsername } = require('../db/index')
 
 app.use(cors())
 
 io.on('connect', (socket) => {
   console.log('a user has connected')
+
+  socket.on('authenticateUser', token => {
+    if (!token) socket.emit('sendUserToLogin')
+  })
+
+  socket.on('verify username is unique', username => {
+    selectByUsername(username, (err, response) => {
+      if (err) console.log('err while checking for username in db, err:' + err)
+
+      const { rows } = response
+      if (rows.length === 0) socket.emit('username is available')
+    })
+  })
 
   socket.on('subscribeToMessages', () => {
     console.log('a user is subscribing to messages')
@@ -39,7 +53,7 @@ io.on('connect', (socket) => {
     })
   })
 
-  socket.on('new login', credentials => {
+  socket.on('login new user', credentials => {
     console.log('logging in new user')
     let parsedCredentials = JSON.parse(credentials)
 
@@ -49,7 +63,9 @@ io.on('connect', (socket) => {
 
       postCredentials(parsedCredentials, (err, response) => {
         if (err) return console.log('err while posting credentials to db, err:' + err)
+
         console.log('successfully saved user credentials to db')
+        
       })
     })
   })

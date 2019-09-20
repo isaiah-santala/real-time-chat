@@ -132,3 +132,6 @@ button:focus {
   font-size: 1.25rem;
 }
 
+.invalid-input {
+  background-color: pink;
+}

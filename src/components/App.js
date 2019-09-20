@@ -4,7 +4,7 @@ import '../styles.css'
 import Login from './Login/Login'
 import Chat from './Chat/Chat'
 
-import { subscribeToMessages, postMessage, postLogin } from '../api'
+import { authenticateUser, postMessage, loginExistingUser, signUpNewUser } from '../api'
 
 class App extends Component {
   constructor(props) {
@@ -12,32 +12,42 @@ class App extends Component {
 
     this.state = {
       username: 'Thomas',
-      messages: []
+      messages: [],
+      view: ''
     }
-
-    subscribeToMessages(messages => this.setState({ messages }))
   }
 
-  handleLogin = credentials => console.log(credentials)
-  handleSignUp = credentials => console.log(credentials)
+  componentDidMount() {
+    authenticateUser(this.changeView, this.loadMessages)
+  }
+
+  handleLogin = credentials => loginExistingUser(credentials)
+  handleSignUp = credentials => signUpNewUser(credentials)
+
+  loadMessages = messages => this.setState({ messages })
+  changeView = view => this.setState({ view })
 
   sendMessage = message => {
-    postMessage(JSON.stringify({
+    postMessage({
       username: this.state.username,
       message: message
-    }))
-  }
+    })
+  }  
 
   render = () => 
     <div className="App">
-      <Login 
-        handleLogin={this.handleLogin}
-        handleSignUp={this.handleSignUp}
-      ></Login>
-      {/* <Chat 
-        messages={this.state.messages}
-        sendMessage={this.sendMessage}
-      /> */}
+      {this.state.view === 'LOGIN' && 
+        <Login 
+          handleLogin={this.handleLogin}
+          handleSignUp={this.handleSignUp}
+        ></Login>
+      }
+      {this.state.view === 'CHAT' &&
+        <Chat 
+          messages={this.state.messages}
+          sendMessage={this.sendMessage}
+        />
+      }
     </div>
 }
 
