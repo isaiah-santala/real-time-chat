@@ -91,6 +91,15 @@ io.on('connect', (socket) => {
     })
   })
 
+  socket.on('login existing user', credentials => {
+    let parsedCredentials = JSON.parse(credentials)
+
+    const user = selectByUsername(parsedCredentials.username, (err, user) => {
+      if (err) console.log(err)
+      //write login authentication here
+    })
+  })
+
   socket.on('disconnect', () => console.log('a user has disconnected'))
 })
 
