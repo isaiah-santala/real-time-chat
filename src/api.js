@@ -20,18 +20,23 @@ function loginExistingUser(data) {
 
 function signUpNewUser(data) {
   socket.emit('login new user', JSON.stringify(data))
+
+  socket.on('assigned new token', token => {
+    window.localStorage.setItem('authToken', token)
+  })
 }
 
-function authenticateUser(changeView, loadMessages) {
+function authenticateUser(changeView, loadMessages, setUser) {
   const token = window.localStorage.getItem('authToken')
 
   socket.emit('authenticateUser', token)
 
   socket.on('sendUserToLogin', () => changeView('LOGIN'))
 
-  socket.on('userIsLoggedIn', (token) => {
+  socket.on('userIsValid', user => {
     subscribeToMessages(loadMessages)
     changeView('CHAT')
+    setUser(JSON.parse(user))
   })
 }
 

@@ -11,14 +11,15 @@ class App extends Component {
     super(props)
 
     this.state = {
-      username: 'Thomas',
+      userId: 0,
+      username: '',
       messages: [],
       view: ''
     }
   }
 
   componentDidMount() {
-    authenticateUser(this.changeView, this.loadMessages)
+    authenticateUser(this.changeView, this.loadMessages, this.setUser)
   }
 
   handleLogin = credentials => loginExistingUser(credentials)
@@ -26,6 +27,7 @@ class App extends Component {
 
   loadMessages = messages => this.setState({ messages })
   changeView = view => this.setState({ view })
+  setUser = user => this.setState({ username: user.username, id: user.id })
 
   sendMessage = message => {
     postMessage({

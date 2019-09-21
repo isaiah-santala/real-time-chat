@@ -49,7 +49,7 @@ class SignUp extends Component {
         <input
           required
           id='username'
-          className={!this.state.usernameIsValid && 'invalid-input' || null}
+          className={!this.state.usernameIsValid ? 'invalid-input' : ''}
           value={this.state.username}
           onChange={this.handleChange}
         ></input>

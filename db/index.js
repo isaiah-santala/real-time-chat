@@ -33,7 +33,7 @@ exports.selectByUsername = (username, cb) => {
 function queryDB(text, values, cb) {
   Chat.query(text, values, (err, response) => {
     if (err) return cb(err)
-    return cb(null, response)
+    return cb(null, response.rows[0])
   })
 }
 

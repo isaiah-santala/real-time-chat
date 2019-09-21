@@ -15,14 +15,22 @@ io.on('connect', (socket) => {
 
   socket.on('authenticateUser', token => {
     if (!token) socket.emit('sendUserToLogin')
+    else {
+      jwt.verify(JSON.parse(token), 'secrets', (err, decoded) => {
+        if (err)  {
+          console.log(err)
+          socket.emit('sendUserToLogin')
+        }
+        else socket.emit('userIsValid', JSON.stringify(decoded))
+      })
+    }
   })
 
   socket.on('verify username is unique', username => {
     selectByUsername(username, (err, response) => {
       if (err) console.log('err while checking for username in db, err:' + err)
 
-      const { rows } = response
-      if (rows.length === 0) socket.emit('username is available')
+      if (!response) socket.emit('username is available')
     })
   })
 
@@ -66,6 +74,19 @@ io.on('connect', (socket) => {
 
         console.log('successfully saved user credentials to db')
         
+        selectByUsername(parsedCredentials.username, (err, user) => {
+          console.log(user)
+          const userStr = JSON.stringify({
+            username: user.username, 
+            id: user.id
+          })
+
+          jwt.sign(userStr, 'secrets', (err, token) => {
+            if (err) return console.log(err)
+  
+            socket.emit('assigned new token', JSON.stringify(token))
+          })
+        })
       })
     })
   })
