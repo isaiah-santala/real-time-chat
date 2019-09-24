@@ -31,9 +31,11 @@ function authenticateUser(changeView, loadMessages, setUser) {
 
   socket.emit('authenticateUser', token)
 
-  socket.on('sendUserToLogin', () => changeView('LOGIN'))
+  socket.on('send user to login', () => changeView('LOGIN'))
 
-  socket.on('userIsValid', user => {
+  socket.on('invalid username or password', () => alert('invalid username or password'))
+
+  socket.on('user is valid', user => {
     subscribeToMessages(loadMessages)
     changeView('CHAT')
     setUser(JSON.parse(user))

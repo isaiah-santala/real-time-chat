@@ -14,14 +14,20 @@ io.on('connect', (socket) => {
   console.log('a user has connected')
 
   socket.on('authenticateUser', token => {
-    if (!token) socket.emit('sendUserToLogin')
+    if (!token) {
+      console.log('user does not have login token')
+      socket.emit('send user to login')
+    }
     else {
       jwt.verify(JSON.parse(token), 'secrets', (err, decoded) => {
         if (err)  {
           console.log(err)
-          socket.emit('sendUserToLogin')
+          socket.emit('send user to login')
         }
-        else socket.emit('userIsValid', JSON.stringify(decoded))
+        else {
+          console.log('user has valid token, logging in user')
+          socket.emit('user is valid', JSON.stringify(decoded))
+        }
       })
     }
   })
@@ -64,6 +70,7 @@ io.on('connect', (socket) => {
   socket.on('login new user', credentials => {
     console.log('logging in new user')
     let parsedCredentials = JSON.parse(credentials)
+    console.log(parsedCredentials.password)
 
     bcrypt.hash(parsedCredentials.password, 10, (err, hash) => {
       if (err) return console.log(err)
@@ -76,6 +83,7 @@ io.on('connect', (socket) => {
         
         selectByUsername(parsedCredentials.username, (err, user) => {
           console.log(user)
+
           const userStr = JSON.stringify({
             username: user.username, 
             id: user.id
@@ -83,7 +91,8 @@ io.on('connect', (socket) => {
 
           jwt.sign(userStr, 'secrets', (err, token) => {
             if (err) return console.log(err)
-  
+            
+            console.log('assigned new token')
             socket.emit('assigned new token', JSON.stringify(token))
           })
         })
@@ -94,9 +103,33 @@ io.on('connect', (socket) => {
   socket.on('login existing user', credentials => {
     let parsedCredentials = JSON.parse(credentials)
 
-    const user = selectByUsername(parsedCredentials.username, (err, user) => {
-      if (err) console.log(err)
-      //write login authentication here
+    selectByUsername(parsedCredentials.username, (err, user) => {
+      console.log('retrieved users credentials from db')
+
+      if (err || !user) {
+        console.log('invalid username or password')
+        return socket.emit('invalid username or password')
+      }
+
+      bcrypt.hash(parsedCredentials.password, 10, (err, hash) => {
+        console.log('hashed given password')
+
+        if (err || !hash) {
+          console.log('invalid username or password')
+          return socket.emit('invalid username or password')
+        }
+
+        if (hash !== user.password) {
+          console.log('invalid username or password')
+          console.log('hash:', hash)
+          console.log('user:', user)
+          console.log('parsedCredentials:', parsedCredentials)
+          return socket.emit('invalid username or password')
+        }
+        
+        console.log('user if valid, logging in user')
+        socket.emit('user is valid', JSON.stringify(user))
+      })
     })
   })
 
