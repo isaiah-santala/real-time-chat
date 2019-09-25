@@ -16,22 +16,27 @@ class Write extends Component {
     this.setState({ message: '' })
   }
 
-  render = () =>
+  render = () => (
+
     <form 
       className="Write"
       onSubmit={e => {
         e.preventDefault()
         this.sendMessage(this.state.message)
     }}>
+
       <input 
         required
         value={this.state.message}
         onChange={e => this.updateMessage(e.target.value)}
       ></input>
+
       <button 
         type="submit"
       >send</button>
+      
     </form>
+  )
 }
 
 export default Write

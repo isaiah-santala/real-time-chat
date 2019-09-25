@@ -13,7 +13,7 @@ app.use(cors())
 io.on('connect', (socket) => {
   console.log('a user has connected')
 
-  socket.on('authenticateUser', token => {
+  socket.on('authenticate user', token => {
     if (!token) {
       console.log('user does not have login token')
       socket.emit('send user to login')
@@ -40,7 +40,7 @@ io.on('connect', (socket) => {
     })
   })
 
-  socket.on('subscribeToMessages', () => {
+  socket.on('subscribe to messages', () => {
     console.log('a user is subscribing to messages')
     getAllMessages((err, response) => {
       if (err) return console.log(err)

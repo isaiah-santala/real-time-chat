@@ -18,13 +18,17 @@ class SignIn extends Component {
     })
   }
 
-  render = () => 
+  render = () => (
+
     <form onSubmit={e => {
       e.preventDefault()
-      this.props.handleLogin(this.state)
+      this.props.handleLogin('EXISTING', this.state)
     }}>
+
       <div className="inputs">
+
         <div className="login-title">Sign In</div>
+
         <label htmlFor="username">username</label>
         <input
           required
@@ -44,15 +48,23 @@ class SignIn extends Component {
           value={this.state.password}
           onChange={this.handleChange}
         ></input>
+
       </div>
 
       <div className="buttons">
-        <button type="submit">login</button>
+
+        <button 
+          type="submit"
+        >login</button>
+
         <button 
           onClick={() => this.props.chandView('SIGNUP')}
         >create an account</button>
+        
       </div>
+
     </form>
+  )
 }
 
 export default SignIn

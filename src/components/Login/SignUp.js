@@ -17,6 +17,7 @@ class SignUp extends Component {
   usernameIsValid = () => this.setState({ usernameIsValid: true })
 
   handleChange = e => {
+
     const { id, value } = e.target
 
     if (id === 'username') this.setState({
@@ -31,20 +32,26 @@ class SignUp extends Component {
 
   handleSubmit = credentials => {
     if (credentials.password1 !== credentials.password2) alert('passwords must match')
-    else this.props.handleSignUp(credentials)
+    else this.props.handleLogin('NEW', credentials)
   }
 
-  render = () =>
+  render = () => (
+
     <form onSubmit={e => {
       e.preventDefault()
+
       if (!this.state.usernameIsValid) alert('username taken')
+
       else this.handleSubmit({
         username: this.state.username,
         password: this.state.password1
       })
     }}>
+
       <div className="inputs">
+
         <div className="login-title">Sign Up</div>
+
         <label htmlFor="username">username</label>
         <input
           required
@@ -78,12 +85,19 @@ class SignUp extends Component {
       </div>
 
       <div className="buttons">
-        <button type="submit">sign up</button>
+
+        <button 
+          type="submit"
+        >sign up</button>
+
         <button 
           onClick={() => this.props.chandView('LOGIN')}
         >return to login</button>
+        
       </div>
+
     </form>
+  )
 }
 
 export default SignUp

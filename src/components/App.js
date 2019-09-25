@@ -22,35 +22,39 @@ class App extends Component {
     authenticateUser(this.changeView, this.loadMessages, this.setUser)
   }
 
-  handleLogin = credentials => loginUser('EXISTING', credentials)
-  handleSignUp = credentials => loginUser('NEW', credentials)
+  handleLogin = (loginType, userCredentials) => loginUser(loginType, userCredentials)
 
   loadMessages = messages => this.setState({ messages })
+
   changeView = view => this.setState({ view })
+
   setUser = user => this.setState({ username: user.username, id: user.id })
 
-  sendMessage = message => {
-    postMessage({
+  sendMessage = message => postMessage({
       username: this.state.username,
       message: message
-    })
-  }  
+  })
+  
 
-  render = () => 
+  render = () => (
+
     <div className="App">
-      {this.state.view === 'LOGIN' && 
-        <Login 
+
+      {this.state.view === 'LOGIN' &&
+        <Login
           handleLogin={this.handleLogin}
-          handleSignUp={this.handleSignUp}
-        ></Login>
+        />
       }
+
       {this.state.view === 'CHAT' &&
-        <Chat 
+        <Chat
           messages={this.state.messages}
           sendMessage={this.sendMessage}
         />
       }
+
     </div>
+  )
 }
 
 export default App;

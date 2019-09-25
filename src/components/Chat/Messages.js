@@ -11,11 +11,20 @@ class Messages extends Component {
     }
   }
 
-  render = () => 
+  render = () => (
+
     <div className="Messages">
-      <Display messages={this.props.messages}/>
-      <Write sendMessage={this.props.sendMessage}/>
+
+      <Display 
+        messages={this.props.messages} 
+      />
+
+      <Write 
+        sendMessage={this.props.sendMessage} 
+      />
+
     </div>
+  )
 } 
 
 export default Messages
