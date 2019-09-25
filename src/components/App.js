@@ -4,7 +4,7 @@ import '../styles.css'
 import Login from './Login/Login'
 import Chat from './Chat/Chat'
 
-import { authenticateUser, postMessage, loginExistingUser, signUpNewUser } from '../api'
+import { authenticateUser, postMessage, loginUser } from '../api'
 
 class App extends Component {
   constructor(props) {
@@ -22,8 +22,8 @@ class App extends Component {
     authenticateUser(this.changeView, this.loadMessages, this.setUser)
   }
 
-  handleLogin = credentials => loginExistingUser(credentials)
-  handleSignUp = credentials => signUpNewUser(credentials)
+  handleLogin = credentials => loginUser('EXISTING', credentials)
+  handleSignUp = credentials => loginUser('NEW', credentials)
 
   loadMessages = messages => this.setState({ messages })
   changeView = view => this.setState({ view })

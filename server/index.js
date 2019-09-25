@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const cors = require('cors')
-const { messageIsNotValid } = require('./serverFns')
+const { messageIsNotValid, createNewToken } = require('./serverFns')
 const { postMessage, getAllMessages, postCredentials, selectByUsername } = require('../db/index')
 
 app.use(cors())
@@ -82,18 +82,13 @@ io.on('connect', (socket) => {
         console.log('successfully saved user credentials to db')
         
         selectByUsername(parsedCredentials.username, (err, user) => {
-          console.log(user)
+          console.log('creating new token')
 
-          const userStr = JSON.stringify({
-            username: user.username, 
-            id: user.id
-          })
-
-          jwt.sign(userStr, 'secrets', (err, token) => {
+          createNewToken(user, (err, newToken) => {
             if (err) return console.log(err)
-            
-            console.log('assigned new token')
-            socket.emit('assigned new token', JSON.stringify(token))
+
+            console.log('assigning new token')
+            socket.emit('assign new token', newToken)
           })
         })
       })
@@ -111,24 +106,21 @@ io.on('connect', (socket) => {
         return socket.emit('invalid username or password')
       }
 
-      bcrypt.hash(parsedCredentials.password, 10, (err, hash) => {
-        console.log('hashed given password')
+      bcrypt.compare(parsedCredentials.password, user.password, (err, res) => {
+        console.log('comparing given password with hashed password')
 
-        if (err || !hash) {
+        if (err || !res) {
           console.log('invalid username or password')
-          return socket.emit('invalid username or password')
-        }
-
-        if (hash !== user.password) {
-          console.log('invalid username or password')
-          console.log('hash:', hash)
-          console.log('user:', user)
-          console.log('parsedCredentials:', parsedCredentials)
           return socket.emit('invalid username or password')
         }
         
-        console.log('user if valid, logging in user')
-        socket.emit('user is valid', JSON.stringify(user))
+        console.log('user is valid, creating new token for user')
+        createNewToken(user, (err, newToken) => {
+          if (err) return console.log(err)
+
+          console.log('assigning new token')
+          socket.emit('assign new token', newToken)
+        })
       })
     })
   })

@@ -29,6 +29,8 @@ class SignIn extends Component {
         <input
           required
           id='username'
+          type="text"
+          autoComplete="username"
           value={this.state.username}
           onChange={this.handleChange}
         ></input>
@@ -38,16 +40,17 @@ class SignIn extends Component {
           required
           id="password"
           type="password"
+          autoComplete="current-password"
           value={this.state.password}
           onChange={this.handleChange}
         ></input>
       </div>
 
       <div className="buttons">
+        <button type="submit">login</button>
         <button 
           onClick={() => this.props.chandView('SIGNUP')}
         >create an account</button>
-        <button type="submit">login</button>
       </div>
     </form>
 }

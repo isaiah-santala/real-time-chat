@@ -49,6 +49,8 @@ class SignUp extends Component {
         <input
           required
           id='username'
+          type="text"
+          autoComplete="username"
           className={!this.state.usernameIsValid ? 'invalid-input' : ''}
           value={this.state.username}
           onChange={this.handleChange}
@@ -59,6 +61,7 @@ class SignUp extends Component {
           required
           id="password1"
           type="password"
+          autoComplete="new-password"
           value={this.state.password1}
           onChange={this.handleChange}
         ></input>
@@ -68,16 +71,17 @@ class SignUp extends Component {
         required
         id="password2"
         type="password"
+        autoComplete="new-password"
         value={this.state.password2}
         onChange={this.handleChange}
       ></input>
       </div>
 
       <div className="buttons">
+        <button type="submit">sign up</button>
         <button 
           onClick={() => this.props.chandView('LOGIN')}
         >return to login</button>
-        <button type="submit">sign up</button>
       </div>
     </form>
 }

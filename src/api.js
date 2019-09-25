@@ -14,15 +14,48 @@ function postMessage(data) {
   socket.emit('new message', JSON.stringify(data))
 }
 
-function loginExistingUser(data) {
-  socket.emit('login existing user', JSON.stringify(data))
-}
+// function loginExistingUser(data) {
+//   socket.emit('login existing user', JSON.stringify(data))
 
-function signUpNewUser(data) {
-  socket.emit('login new user', JSON.stringify(data))
+//   socket.on('assign new token', token => {
+//     console.log('saving token to localstorage')
+//     window.localStorage.setItem('authToken', token)
+//     console.log('reloading browser')
+//     window.location.reload(true)
+//   })
+// }
 
-  socket.on('assigned new token', token => {
+// function signUpNewUser(data) {
+//   socket.emit('login new user', JSON.stringify(data))
+
+//   socket.on('assign new token', token => {
+//     console.log('saving token to localstorage')
+//     window.localStorage.setItem('authToken', token)
+//     console.log('reloading browser')
+//     window.location.reload(true)
+//   })
+// }
+
+function loginUser(userType, userData) {
+  switch (userType) {
+    case 'EXISTING':
+      socket.emit('login existing user', JSON.stringify(userData))
+      break;
+
+    case 'NEW':
+      socket.emit('login new user', JSON.stringify(userData))
+      break;
+
+    default:
+      socket.emit('login new user', JSON.stringify(userData))
+      break;
+  }
+
+  socket.on('assign new token', token => {
+    console.log('saving token to localstorage')
     window.localStorage.setItem('authToken', token)
+    console.log('reloading browser')
+    window.location.reload(true)
   })
 }
 
@@ -49,4 +82,4 @@ function checkIfUsernameIsValid(username, usernameIsValid) {
 }
 
 export { authenticateUser, subscribeToMessages, 
-  postMessage, loginExistingUser, signUpNewUser, checkIfUsernameIsValid }
+  postMessage, checkIfUsernameIsValid, loginUser }
