@@ -155,9 +155,16 @@ button:focus {
 }
 
 .Write {
-  height: 7%;
+  margin-top: 1rem; 
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Write textarea {
+  width: 65%;
+  font-size: 1.25rem;
+  height: 7rem;
 }
 
 .message {
@@ -172,11 +179,6 @@ button:focus {
 .m-name {
   height: 1rem;
   margin-right: 1rem;
-}
-
-.Write input {
-  width: 65%;
-  font-size: 1.25rem;
 }
 
 .invalid-input {

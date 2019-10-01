@@ -23,10 +23,6 @@ class Messages extends Component {
         messages={this.props.messages} 
       />
 
-      <Write 
-        sendMessage={this.props.sendMessage} 
-      />
-
     </div>
   )
 } 

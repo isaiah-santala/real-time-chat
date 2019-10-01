@@ -1,17 +1,25 @@
 import React from 'react'
 import Messages from './Messages'
 import Lobby from './Lobby'
+import Write from './Write'
 
 const MessageView = props => (
 
+    <div>
+
     <div className="MessageView">
 
-      <Messages
-        messages={props.messages}
-        sendMessage={props.sendMessage}
-      />
+        <Messages
+          messages={props.messages}
+        />
 
-      <Lobby
+        <Lobby
+        />
+
+      </div>
+
+      <Write
+        sendMessage={props.sendMessage}
       />
 
     </div>

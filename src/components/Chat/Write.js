@@ -25,15 +25,19 @@ class Write extends Component {
         this.sendMessage(this.state.message)
     }}>
 
-      <input 
+      <textarea 
         required
         value={this.state.message}
         onChange={e => this.updateMessage(e.target.value)}
-      ></input>
+      ></textarea>
 
-      <button 
-        type="submit"
-      >send</button>
+      <div className="buttons" >
+
+        <button 
+          type="submit"
+        >send</button>
+
+      </div>
       
     </form>
   )
