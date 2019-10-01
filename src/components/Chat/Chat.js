@@ -1,17 +1,13 @@
 import React from 'react'
-import Messages from './Messages'
-import Lobby from './Lobby'
+import MessageView from './MessageView'
 
 const Chat = props => (
 
   <div className="Chat">
 
-    <Messages
+    <MessageView
       messages={props.messages}
       sendMessage={props.sendMessage}
-    />
-
-    <Lobby 
     />
 
   </div>

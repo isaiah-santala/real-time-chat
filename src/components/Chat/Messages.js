@@ -15,6 +15,10 @@ class Messages extends Component {
 
     <div className="Messages">
 
+      <div
+        className="messages-title"
+      >Messages</div>
+
       <Display 
         messages={this.props.messages} 
       />

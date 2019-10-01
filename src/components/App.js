@@ -36,7 +36,7 @@ class App extends Component {
   })
   
 
-  render = () => (
+  render = props => (
 
     <div className="App">
 

@@ -11,7 +11,6 @@
   font-size: 1.25rem;
   border-style: solid;
   width: 20rem;
-  display: flex;
   padding-bottom: 10%; 
 }
 
@@ -82,13 +81,33 @@ button:focus {
     transform: scale(0.99);
 }
 
-
 .Chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MessageView {
   display: flex;
   flex-direction: row;
   height: 40rem;
   width: 60rem;
 }
+
+.NavBar {
+  width: 100%;
+  color: #ffffff;
+  border-color: black;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background-color: #0069ed;
+  font-size: 2rem;
+  border-style: solid;
+}
+
 
 .Messages {
   width: 65%;
@@ -100,6 +119,34 @@ button:focus {
   width: 35%;
   height: 100%;
   border-style: solid;
+}
+
+.lobby-title {
+  color: #ffffff;
+  border-color: black;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background-color: #0069ed;
+  font-size: 2rem;
+  border-style: solid;
+  margin-bottom: 0.5rem;
+}
+
+.messages-title {
+  color: #ffffff;
+  border-color: black;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background-color: #0069ed;
+  font-size: 2rem;
+  border-style: solid;
+  margin-bottom: 0.5rem;
 }
 
 .Display {
