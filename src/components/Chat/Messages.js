@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Write from './Write'
 import Display from './Display'
 
 class Messages extends Component {

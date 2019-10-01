@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Display = props => (
+class Display extends Component {
+  constructor(props) {
+    super(props)
 
-  <div className="Display">
+    this.state = {}
+  }
 
-    {props.messages.map((e, i) => 
+  componentDidUpdate() {
+    
+  }
+
+  render = props => (
+
+    <div className="Display">
+
+      {this.props.messages.map((e, i) =>
         <div className="message" key={i}>
           <div className="m-name">{e.username}:</div>
           <div className="m-message">{e.message}</div>
         </div>
-    )}
+      )}
 
-  </div>
-)
+    </div>
+  )
+}
 
 export default Display
