@@ -6,10 +6,23 @@ const Chat = new Pool(config)
 Chat.connect()
 
 exports.getAllMessages = (cb) => {
-  Chat.query('SELECT username, message FROM messages', (err, data) => {
+  Chat.query('SELECT username, message FROM messages', (err, res) => {
     if (err) return cb(err)
-    return cb(null, data)
+    return cb(null, res.rows)
   })
+}
+
+exports.getAllActiveUsers = (cb) => {
+  Chat.query('SELECT * FROM active', (err, res) => {
+    if (err) return cb(err)
+    return cb(null, res.rows)
+  })
+}
+
+exports.addUserToActiveLobby = (username, cb) => {
+  const text = 'INSERT INTO active(username) VALUES($1)'
+  const values = [username]
+  queryDB(text, values, cb)
 }
 
 exports.postMessage = (data, cb) => {
@@ -31,9 +44,9 @@ exports.selectByUsername = (username, cb) => {
 }
 
 function queryDB(text, values, cb) {
-  Chat.query(text, values, (err, response) => {
+  Chat.query(text, values, (err, res) => {
     if (err) return cb(err)
-    return cb(null, response.rows[0])
+    return cb(null, res.rows[0])
   })
 }
 

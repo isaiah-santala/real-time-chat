@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken')
 
 const cors = require('cors')
 const { messageIsNotValid, createNewToken } = require('./serverFns')
-const { postMessage, getAllMessages, postCredentials, selectByUsername } = require('../db/index')
+const { postMessage, getAllMessages, postCredentials, selectByUsername, getAllActiveUsers, addUserToActiveLobby } = require('../db/index')
 
 app.use(cors())
 
 io.on('connect', (socket) => {
+
   console.log('a user has connected')
 
   socket.on('authenticate user', token => {
@@ -32,6 +33,7 @@ io.on('connect', (socket) => {
     }
   })
 
+
   socket.on('verify username is unique', username => {
     selectByUsername(username, (err, response) => {
       if (err) console.log('err while checking for username in db, err:' + err)
@@ -40,14 +42,39 @@ io.on('connect', (socket) => {
     })
   })
 
+
   socket.on('subscribe to messages', () => {
     console.log('a user is subscribing to messages')
     getAllMessages((err, response) => {
       if (err) return console.log(err)
-      socket.emit('new messages', response.rows)
+      socket.emit('new messages', response)
       console.log('messages succefully retrieved from db')
     })
   })
+
+
+  socket.on('subscribe to lobby', () => {
+    console.log('a user is subscribing to lobby')
+    getAllActiveUsers((err, response) => {
+      if (err) return console.log(err)
+      socket.emit('new users in lobby', response)
+      console.log('lobby succefully retrieved from db')
+    })
+  })
+
+  socket.on('add user to lobby', user => {
+    const parsedUser = JSON.parse(user)
+    addUserToActiveLobby(parsedUser.username, (err, response) => {
+      if (err) return console.log(err)
+      console.log('added user to active')
+      
+      getAllActiveUsers((err, response) => {
+        if (err) return console.log(err)
+        socket.broadcast.emit('new users in lobby', response)
+      })
+    })
+  })
+
 
   socket.on('new message', message => {
     console.log('posting message: ' + message)
@@ -66,6 +93,7 @@ io.on('connect', (socket) => {
       })
     })
   })
+
 
   socket.on('login new user', credentials => {
     console.log('logging in new user')
@@ -94,6 +122,7 @@ io.on('connect', (socket) => {
       })
     })
   })
+
 
   socket.on('login existing user', credentials => {
     let parsedCredentials = JSON.parse(credentials)
@@ -124,6 +153,7 @@ io.on('connect', (socket) => {
       })
     })
   })
+
 
   socket.on('disconnect', () => console.log('a user has disconnected'))
 })

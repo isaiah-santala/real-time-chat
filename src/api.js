@@ -1,7 +1,8 @@
 import openSocket from 'socket.io-client'
 const socket = openSocket('http://localhost:3001')
 
-function authenticateUser(changeView, loadMessages, setUser) {
+
+function authenticateUser(changeView, loadMessages, setUser, loadLobby) {
 
   const token = window.localStorage.getItem('authToken')
 
@@ -12,10 +13,14 @@ function authenticateUser(changeView, loadMessages, setUser) {
   socket.on('invalid username or password', () => alert('invalid username or password'))
 
   socket.on('user is valid', user => {
-    subscribeToMessages(loadMessages)
-    changeView('CHAT')
-    setUser(JSON.parse(user))
-  })
+      subscribeToMessages(loadMessages)
+      subscribeToLobby(loadLobby)
+      changeView('CHAT')
+      setUser(JSON.parse(user))
+
+      socket.emit('add user to lobby', user)
+    }
+  )
 }
 
 
@@ -59,6 +64,16 @@ function subscribeToMessages(cb) {
   socket.on('invalid message', () => alert('message contains 1 or more invalid characters'))
 
   socket.emit('subscribe to messages')
+}
+
+function subscribeToLobby(cb) {
+
+  socket.on('new users in lobby', lobby => {
+    console.log(lobby)
+    cb(lobby)
+  })
+
+  socket.emit('subscribe to lobby')
 }
 
 

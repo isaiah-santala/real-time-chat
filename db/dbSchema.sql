@@ -10,3 +10,8 @@ CREATE TABLE messages (
   username VARCHAR(255),
   message TEXT
 );
+
+CREATE TABLE active (
+  id SERIAL,
+  username VARCHAR(255)
+);

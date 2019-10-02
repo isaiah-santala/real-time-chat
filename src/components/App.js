@@ -14,12 +14,13 @@ class App extends Component {
       userId: 0,
       username: '',
       messages: [],
+      lobby: [],
       view: ''
     }
   }
 
   componentDidMount() {
-    authenticateUser(this.changeView, this.loadMessages, this.setUser)
+    authenticateUser(this.changeView, this.loadMessages, this.setUser, this.loadLobby)
   }
 
   handleLogin = (loginType, userCredentials) => loginUser(loginType, userCredentials)
@@ -29,6 +30,8 @@ class App extends Component {
   changeView = view => this.setState({ view })
 
   setUser = user => this.setState({ username: user.username, id: user.id })
+
+  loadLobby = lobby => this.setState({ lobby })
 
   sendMessage = message => postMessage({
       username: this.state.username,
