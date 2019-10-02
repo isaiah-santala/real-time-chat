@@ -166,6 +166,7 @@ button:focus {
   width: 65%;
   font-size: 1.25rem;
   height: 7rem;
+  margin-bottom: 1rem;
 }
 
 .message {

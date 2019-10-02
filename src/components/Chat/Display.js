@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
+import React, { useRef, useEffect } from 'react'
 
-class Display extends Component {
-  constructor(props) {
-    super(props)
+const Display = ({ messages }) =>  {
 
-    this.state = {}
-  }
+  const bottom = useRef()
 
-  componentDidUpdate() {
-    
-  }
+  const focusBottom = () => bottom.current.scrollIntoView()
 
-  render = props => (
+  useEffect(focusBottom)
+
+  return (
 
     <div className="Display">
 
-      {this.props.messages.map((e, i) =>
+      {messages.map((e, i) =>
         <div className="message" key={i}>
           <div className="m-name">{e.username}:</div>
           <div className="m-message">{e.message}</div>
         </div>
       )}
 
+      <div ref={bottom}></div>
+
     </div>
+
   )
 }
 
