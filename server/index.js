@@ -8,6 +8,8 @@ const cors = require('cors')
 const { messageIsNotValid, createNewToken } = require('./serverFns')
 const { postMessage, getAllMessages, postCredentials, selectByUsername, getAllActiveUsers, addUserToActiveLobby } = require('../db/index')
 
+const lobby = {}
+
 app.use(cors())
 
 io.on('connect', (socket) => {
@@ -27,6 +29,9 @@ io.on('connect', (socket) => {
         }
         else {
           console.log('user has valid token, logging in user')
+
+          lobby[decoded.username] = decoded.username
+
           socket.emit('user is valid', JSON.stringify(decoded))
         }
       })
@@ -55,24 +60,8 @@ io.on('connect', (socket) => {
 
   socket.on('subscribe to lobby', () => {
     console.log('a user is subscribing to lobby')
-    getAllActiveUsers((err, response) => {
-      if (err) return console.log(err)
-      socket.emit('new users in lobby', response)
-      console.log('lobby succefully retrieved from db')
-    })
-  })
 
-  socket.on('add user to lobby', user => {
-    const parsedUser = JSON.parse(user)
-    addUserToActiveLobby(parsedUser.username, (err, response) => {
-      if (err) return console.log(err)
-      console.log('added user to active')
-      
-      getAllActiveUsers((err, response) => {
-        if (err) return console.log(err)
-        socket.broadcast.emit('new users in lobby', response)
-      })
-    })
+    socket.emit('new users in lobby', Object.keys(lobby))
   })
 
 

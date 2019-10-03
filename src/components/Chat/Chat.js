@@ -7,6 +7,7 @@ const Chat = props => (
 
     <MessageView
       messages={props.messages}
+      lobby={props.lobby}
       sendMessage={props.sendMessage}
     />
 

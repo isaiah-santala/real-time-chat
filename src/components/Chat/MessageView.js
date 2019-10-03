@@ -14,6 +14,7 @@ const MessageView = props => (
         />
 
         <Lobby
+          lobby={props.lobby}
         />
 
       </div>

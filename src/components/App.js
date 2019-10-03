@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    authenticateUser(this.changeView, this.loadMessages, this.setUser, this.loadLobby)
+    authenticateUser(this.changeView, this.loadMessages, this.setUser, this.loadLobby, this.setStateFromApi)
   }
 
   handleLogin = (loginType, userCredentials) => loginUser(loginType, userCredentials)
@@ -29,7 +29,7 @@ class App extends Component {
 
   changeView = view => this.setState({ view })
 
-  setUser = user => this.setState({ username: user.username, id: user.id })
+  setUser = user => this.setState({ user })
 
   loadLobby = lobby => this.setState({ lobby })
 
@@ -52,6 +52,7 @@ class App extends Component {
       {this.state.view === 'CHAT' &&
         <Chat
           messages={this.state.messages}
+          lobby={this.state.lobby}
           sendMessage={this.sendMessage}
         />
       }

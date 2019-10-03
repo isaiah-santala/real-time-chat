@@ -119,6 +119,7 @@ button:focus {
   width: 35%;
   height: 100%;
   border-style: solid;
+  overflow: scroll;
 }
 
 .lobby-title {
@@ -133,6 +134,18 @@ button:focus {
   font-size: 2rem;
   border-style: solid;
   margin-bottom: 0.5rem;
+}
+
+.active-user {
+  border-style: solid;
+  height: 4rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.active-user .username {
+  font-style: italic;
+  font-size: 1.75rem;  
 }
 
 .messages-title {

@@ -22,7 +22,7 @@ class Login extends Component {
         />}
       {this.state.view === 'SIGNUP' && 
         <SignUp 
-          handleSignUp={this.props.handleSignUp}
+          handleLogin={this.props.handleLogin}
           chandView={this.chandView}
         />}
     </div>

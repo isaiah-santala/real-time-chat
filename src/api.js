@@ -17,8 +17,6 @@ function authenticateUser(changeView, loadMessages, setUser, loadLobby) {
       subscribeToLobby(loadLobby)
       changeView('CHAT')
       setUser(JSON.parse(user))
-
-      socket.emit('add user to lobby', user)
     }
   )
 }
