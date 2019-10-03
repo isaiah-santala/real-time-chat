@@ -2,23 +2,22 @@ import openSocket from 'socket.io-client'
 const socket = openSocket('http://localhost:3001')
 
 
-function authenticateUser(changeView, loadMessages, setUser, loadLobby) {
+function authenticateUser(setState) {
 
   const token = window.localStorage.getItem('authToken')
 
   socket.emit('authenticate user', token)
 
-  socket.on('send user to login', () => changeView('LOGIN'))
+  socket.on('send user to login', () => setState('view', 'LOGIN'))
 
   socket.on('invalid username or password', () => alert('invalid username or password'))
 
   socket.on('user is valid', user => {
-      subscribeToMessages(loadMessages)
-      subscribeToLobby(loadLobby)
-      changeView('CHAT')
-      setUser(JSON.parse(user))
-    }
-  )
+      subscribeToMessages((messages) => setState('messages', messages))
+      subscribeToLobby((lobby) => setState('lobby', lobby ))
+      setState('view', 'CHAT')
+      setState('user', JSON.parse(user))
+  })
 }
 
 
@@ -30,7 +29,10 @@ function loginUser(userType, userData) {
       break;
 
     case 'NEW':
-      socket.emit('login new user', JSON.stringify(userData))
+      socket.emit('register new user', JSON.stringify(userData))
+
+      socket.on('login newly registered user', credentials => 
+        socket.emit('login existing user', credentials))
       break;
 
     default:
@@ -64,12 +66,10 @@ function subscribeToMessages(cb) {
   socket.emit('subscribe to messages')
 }
 
+
 function subscribeToLobby(cb) {
 
-  socket.on('new users in lobby', lobby => {
-    console.log(lobby)
-    cb(lobby)
-  })
+  socket.on('lobby was updated', lobby => cb(lobby))
 
   socket.emit('subscribe to lobby')
 }
@@ -79,6 +79,10 @@ function postMessage(data) {
   socket.emit('new message', JSON.stringify(data))
 }
 
+function logout() {
+  window.localStorage.clear()
+}
+
 
 export { authenticateUser, subscribeToMessages, 
-  postMessage, checkIfUsernameIsValid, loginUser }
+  postMessage, checkIfUsernameIsValid, loginUser, logout }

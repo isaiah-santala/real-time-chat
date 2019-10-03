@@ -4,7 +4,7 @@ import '../styles.css'
 import Login from './Login/Login'
 import Chat from './Chat/Chat'
 
-import { authenticateUser, postMessage, loginUser } from '../api'
+import { authenticateUser, postMessage, loginUser, logout } from '../api'
 
 class App extends Component {
   constructor(props) {
@@ -20,18 +20,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    authenticateUser(this.changeView, this.loadMessages, this.setUser, this.loadLobby, this.setStateFromApi)
+    authenticateUser(this.setStateFromApi)
   }
 
   handleLogin = (loginType, userCredentials) => loginUser(loginType, userCredentials)
 
-  loadMessages = messages => this.setState({ messages })
-
-  changeView = view => this.setState({ view })
-
-  setUser = user => this.setState({ user })
-
-  loadLobby = lobby => this.setState({ lobby })
+  setStateFromApi = (key, val) => this.setState({ [key]: val })
 
   sendMessage = message => postMessage({
       username: this.state.username,

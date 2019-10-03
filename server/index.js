@@ -8,30 +8,33 @@ const cors = require('cors')
 const { messageIsNotValid, createNewToken } = require('./serverFns')
 const { postMessage, getAllMessages, postCredentials, selectByUsername, getAllActiveUsers, addUserToActiveLobby } = require('../db/index')
 
-const lobby = {}
+const LOBBY = {}
 
 app.use(cors())
+
 
 io.on('connect', (socket) => {
 
   console.log('a user has connected')
 
   socket.on('authenticate user', token => {
+
     if (!token) {
-      console.log('user does not have login token')
+      console.log('user does not have login token \n sending user to login')
       socket.emit('send user to login')
     }
+
     else {
       jwt.verify(JSON.parse(token), 'secrets', (err, decoded) => {
+
         if (err)  {
           console.log(err)
           socket.emit('send user to login')
         }
+
         else {
           console.log('user has valid token, logging in user')
-
-          lobby[decoded.username] = decoded.username
-
+          LOBBY[socket.id] = decoded.username
           socket.emit('user is valid', JSON.stringify(decoded))
         }
       })
@@ -40,43 +43,51 @@ io.on('connect', (socket) => {
 
 
   socket.on('verify username is unique', username => {
+
     selectByUsername(username, (err, response) => {
       if (err) console.log('err while checking for username in db, err:' + err)
-
       if (!response) socket.emit('username is available')
     })
   })
 
 
   socket.on('subscribe to messages', () => {
+
     console.log('a user is subscribing to messages')
+
     getAllMessages((err, response) => {
+
       if (err) return console.log(err)
+      console.log('messages succefully retrieved from db \n sending to client')
       socket.emit('new messages', response)
-      console.log('messages succefully retrieved from db')
     })
   })
 
 
   socket.on('subscribe to lobby', () => {
-    console.log('a user is subscribing to lobby')
 
-    socket.emit('new users in lobby', Object.keys(lobby))
+    console.log('a user is subscribing to lobby')
+    socket.emit('lobby was updated', Object.values(LOBBY))
   })
 
 
   socket.on('new message', message => {
-    console.log('posting message: ' + message)
+
+    console.log('posting new message')
     const parsedMessage = JSON.parse(message)
-    console.log(parsedMessage)
+
     if (messageIsNotValid(parsedMessage.message)) return socket.emit('invalid message')
 
-    postMessage(parsedMessage, (err, response) => {
+    postMessage(parsedMessage, (err) => {
+
       if (err) return console.log('err while posting to db, err:', err)
       console.log('successfully saved messages to db')
 
       getAllMessages((err, response) => {
+
         if (err) return console.log(err)
+
+        console.log('sending new messages to clients')
         socket.emit('new messages', response.rows)
         socket.broadcast.emit('new messages', response.rows)
       })
@@ -84,36 +95,31 @@ io.on('connect', (socket) => {
   })
 
 
-  socket.on('login new user', credentials => {
-    console.log('logging in new user')
+  socket.on('register new user', credentials => {
+
+    console.log('registering in new user')
     let parsedCredentials = JSON.parse(credentials)
-    console.log(parsedCredentials.password)
 
     bcrypt.hash(parsedCredentials.password, 10, (err, hash) => {
-      if (err) return console.log(err)
+
+      if (err) return console.log('err while hashing credentials:' + err)
       parsedCredentials.password = hash
 
-      postCredentials(parsedCredentials, (err, response) => {
+      postCredentials(parsedCredentials, (err) => {
+
         if (err) return console.log('err while posting credentials to db, err:' + err)
 
         console.log('successfully saved user credentials to db')
-        
-        selectByUsername(parsedCredentials.username, (err, user) => {
-          console.log('creating new token')
 
-          createNewToken(user, (err, newToken) => {
-            if (err) return console.log(err)
-
-            console.log('assigning new token')
-            socket.emit('assign new token', newToken)
-          })
-        })
+        socket.emit('login newly registered user', credentials)
       })
     })
   })
 
 
   socket.on('login existing user', credentials => {
+
+    console.log('loggin in existing user')
     let parsedCredentials = JSON.parse(credentials)
 
     selectByUsername(parsedCredentials.username, (err, user) => {
@@ -144,7 +150,12 @@ io.on('connect', (socket) => {
   })
 
 
-  socket.on('disconnect', () => console.log('a user has disconnected'))
+  socket.on('disconnect', () => {
+    console.log('a user has disconnected')
+
+    delete LOBBY[socket.id]
+    socket.emit('lobby was updated', Object.values(LOBBY))
+  })
 })
 
 const port = 3001
