@@ -48,6 +48,7 @@ class App extends Component {
           messages={this.state.messages}
           lobby={this.state.lobby}
           sendMessage={this.sendMessage}
+          logout={logout}
         />
       }
 

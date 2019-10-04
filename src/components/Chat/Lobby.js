@@ -6,7 +6,7 @@ const Lobby = props => (
 
     <div className="lobby-title">Lobby</div>
 
-    <div className="lobby">
+    <div>
 
       {props.lobby.map((e, i) => 
         <div 

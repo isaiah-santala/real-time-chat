@@ -1,3 +1,8 @@
+body {
+  margin: 0%;
+  background-color: rgb(251, 251, 251);
+}
+
 .App {
   display: flex;
   justify-content: center;
@@ -11,7 +16,8 @@
   font-size: 1.25rem;
   border-style: solid;
   width: 20rem;
-  padding-bottom: 10%; 
+  padding-bottom: 10%;
+  background-color: #fff; 
 }
 
 .login-title {
@@ -25,7 +31,7 @@
   width: 20rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-style: solid;
+  border-bottom-style: solid;
   margin-bottom: 0.5rem;
 }
 
@@ -44,6 +50,7 @@
   display: flex;
   justify-content: center;
   border-style: solid;
+  border-top-style: none;
   width: 20rem;
   height: 3rem;
   background-color: #0069ed;
@@ -95,9 +102,10 @@ button:focus {
 }
 
 .NavBar {
-  width: 100%;
+  width: 175%;
   color: #ffffff;
   border-color: black;
+  border-style: none;
   font-family: sans-serif;
   display: flex;
   justify-content: center;
@@ -105,7 +113,11 @@ button:focus {
   height: 3rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-style: solid;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10rem;
+  box-shadow: 5px 5px 5px black;
 }
 
 
@@ -113,6 +125,7 @@ button:focus {
   width: 65%;
   height: 100%;
   border-style: solid;
+  background-color: #fff;
 }
 
 .Lobby {
@@ -120,6 +133,7 @@ button:focus {
   height: 100%;
   border-style: solid;
   overflow: scroll;
+  background-color: #fff;
 }
 
 .lobby-title {
@@ -132,12 +146,11 @@ button:focus {
   height: 3rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-style: solid;
-  margin-bottom: 0.5rem;
+  border-bottom-style: solid;
 }
 
 .active-user {
-  border-style: solid;
+  box-shadow: 0px 1px 1px grey;
   height: 4rem;
   text-align: center;
   font-size: 1.5rem;
@@ -158,12 +171,13 @@ button:focus {
   height: 3rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-style: solid;
+  border-bottom-style: solid;
   margin-bottom: 0.5rem;
 }
 
 .Display {
-  padding: 1rem;
+  padding: 1.5rem;
+  padding-top: 0%;
   height: 82%;
   overflow: scroll;
 }
@@ -183,12 +197,13 @@ button:focus {
 }
 
 .message {
-  margin-top: 2rem; 
+  margin-top: 1rem; 
   display: flex;
   flex-direction: row;
   width: 20rem;
-  border-style: solid;
   padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: rgb(238, 238, 238);
 }
 
 .m-name {

@@ -80,7 +80,8 @@ function postMessage(data) {
 }
 
 function logout() {
-  window.localStorage.clear()
+  window.localStorage.setItem('authToken', '')
+  window.location.reload(true)
 }
 
 
