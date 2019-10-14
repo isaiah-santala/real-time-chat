@@ -1,6 +1,7 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -88,8 +89,8 @@ io.on('connect', (socket) => {
         if (err) return console.log(err)
 
         console.log('sending new messages to clients')
-        socket.emit('new messages', response.rows)
-        socket.broadcast.emit('new messages', response.rows)
+        socket.emit('new messages', response)
+        socket.broadcast.emit('new messages', response)
       })
     })
   })

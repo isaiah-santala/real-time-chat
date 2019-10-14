@@ -11,8 +11,10 @@ class App extends Component {
     super(props)
 
     this.state = {
-      userId: 0,
-      username: '',
+      user : {
+        userId: 0,
+        username: ''
+      }, 
       messages: [],
       lobby: [],
       view: ''
@@ -25,10 +27,10 @@ class App extends Component {
 
   handleLogin = (loginType, userCredentials) => loginUser(loginType, userCredentials)
 
-  setStateFromApi = (key, val) => this.setState({ [key]: val })
+  setStateFromApi = (key, val) => this.setState({ [key] : val })
 
   sendMessage = message => postMessage({
-      username: this.state.username,
+      username: this.state.user.username,
       message: message
   })
   

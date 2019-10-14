@@ -132,7 +132,6 @@ button:focus {
   width: 35%;
   height: 100%;
   border-style: solid;
-  overflow: scroll;
   background-color: #fff;
 }
 
@@ -147,6 +146,11 @@ button:focus {
   background-color: #0069ed;
   font-size: 2rem;
   border-bottom-style: solid;
+}
+
+.lobby-users {
+  overflow: scroll;
+  height: 100%;
 }
 
 .active-user {
