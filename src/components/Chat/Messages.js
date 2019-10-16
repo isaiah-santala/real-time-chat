@@ -19,6 +19,7 @@ class Messages extends Component {
       >Messages</div>
 
       <Display 
+        user={this.props.user}
         messages={this.props.messages} 
       />
 

@@ -10,6 +10,7 @@ const MessageView = props => (
     <div className="MessageView">
 
         <Messages
+          user={props.user}
           messages={props.messages}
         />
 

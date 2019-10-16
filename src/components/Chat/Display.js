@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 
-const Display = ({ messages }) =>  {
+const Display = ({ messages, user }) =>  {
 
   const bottom = useRef()
 
@@ -8,12 +8,14 @@ const Display = ({ messages }) =>  {
 
   useEffect(focusBottom)
 
+  const messageStyle = username => username === user.username ? 'self' : 'other'
+
   return (
 
     <div className="Display">
 
       {messages.map((e, i) =>
-        <div className="message" key={i}>
+        <div className={"message " + messageStyle(e.username)} key={i}>
           <div className="m-name">{e.username}:</div>
           <div className="m-message">{e.message}</div>
         </div>

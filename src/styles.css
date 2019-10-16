@@ -74,18 +74,21 @@ body {
     -moz-appearance: none;
 }
 
-.buttons button:hover,
-button:focus {
-    background: #0053ba;
-}
-
+.buttons button:hover {
+    background-color: #0053ba;
+  }
+  
 .buttons button:focus {
-    outline: 1px solid #fff;
-    outline-offset: -4px;
+  outline: none;
 }
 
 .buttons button:active {
-    transform: scale(0.99);
+  font-weight: bold;
+  box-shadow: inset 0.05rem 0.10rem  0.25rem black;
+}
+
+.buttons .submit-button {
+  width: 100%;
 }
 
 .Chat {
@@ -185,6 +188,8 @@ button:focus {
   padding-top: 0%;
   height: 82%;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .Write {
@@ -205,10 +210,18 @@ button:focus {
   margin-top: 1rem; 
   display: flex;
   flex-direction: row;
+  color: white;
+  font-family: sans-serif;
   width: 20rem;
   padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: rgb(238, 238, 238);
+  padding-left: 1.25rem;
+  border-radius: 1rem;
+  background-color: rgba(136, 136, 136, 0.815);
+}
+
+.self {
+  background-color: rgba(0, 115, 255, 0.774);
+  align-self: flex-end;
 }
 
 .m-name {

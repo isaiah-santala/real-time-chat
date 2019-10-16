@@ -42,6 +42,7 @@ class Write extends Component {
       <div className="buttons" >
 
         <button 
+          className="submit-button"
           type="submit"
         >send</button>
 

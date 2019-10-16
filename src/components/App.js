@@ -48,6 +48,7 @@ class App extends Component {
       {this.state.view === 'CHAT' &&
         <Chat
           messages={this.state.messages}
+          user={this.state.user}
           lobby={this.state.lobby}
           sendMessage={this.sendMessage}
           logout={logout}

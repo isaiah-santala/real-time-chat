@@ -9,6 +9,7 @@ const Chat = props => (
     <NavBar logout={props.logout}/>
 
     <MessageView
+      user={props.user}
       messages={props.messages}
       lobby={props.lobby}
       sendMessage={props.sendMessage}
