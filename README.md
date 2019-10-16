@@ -12,12 +12,12 @@
 ## Features
 
 ### Authentication
-> [X] Users should be able to create accounts and login with their created accounts.
-> [X] User Login data should be stored in a database.
-> [X] Passwords should be hashed with salt. 
-(This feature was Implemented utilizing bcrypt: https://www.npmjs.com/package/bcrypt).
-> [X] The app should utilize local storage to authenticate users. 
-(This feature was Implemented utilizing Json Web Tokens : https://www.npmjs.com/package/jsonwebtoken).
+> [X] Users should be able to create accounts and login with their created accounts.  
+> [X] User Login data should be stored in a database.  
+> [X] Passwords should be hashed with salt.  
+(This feature was Implemented utilizing bcrypt: https://www.npmjs.com/package/bcrypt).  
+> [X] The app should utilize local storage to authenticate users.   
+(This feature was Implemented utilizing Json Web Tokens : https://www.npmjs.com/package/jsonwebtoken).  
 > [X] New users signing up should be prevented from and alerted when trying to sign up with an already existing username or when password confirmation is failed.
 
 ### Server
@@ -25,7 +25,7 @@
 (This feature was Implemented utilizing Socket.io: https://www.npmjs.com/package/socket.io).
 
 ### Messages
-> [X] Users should be able to see and scroll through all messages in lobby.
+> [X] Users should be able to see and scroll through all messages in lobby.  
 > [X] Messages should be displayed in ascending order, with most recent messages scrolled into view upon page load.
 
 
