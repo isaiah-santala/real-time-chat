@@ -1,7 +1,6 @@
 # Real Time Chat
 > In this app I am working to create a real time chatroom utilizing web sockets.
 
-I am still working on updating this readme, there are more currently completed features than what have been listed here.
 
 ## Features
 
@@ -16,7 +15,16 @@ I am still working on updating this readme, there are more currently completed f
 
 ### Server
 [X] Users should be able to have a real time connection with the server where they are instantly updated when a new user joins the lobby and new messages are sent.
+(This feature was Implemented utilizing Socket.io: https://www.npmjs.com/package/socket.io)
+
+### Messages
+[X] Users should be able to see and scroll through all messages in lobby
+[X] Messages should be displayed in ascending order, with most recent messages scrolled into view upon page load
 
 
+### Lobby
+[X] Users should be able to see a scroll able list of all users currently connected to the chat server
 
 
+## Technologies
+> JavaScript, React, Socket.io, express, Json Web Tokens, Bcrypt, WebPack, Babble, PostgreSQL
