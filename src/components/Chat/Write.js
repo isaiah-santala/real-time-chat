@@ -11,9 +11,16 @@ class Write extends Component {
 
   updateMessage = message => this.setState({ message })
 
-  sendMessage = message => {
-    this.props.sendMessage(message)
+  sendMessage = () => {
+    this.props.sendMessage(this.state.message)
     this.setState({ message: '' })
+  }
+
+  altEnterSubmit = e => {
+    if (e.metaKey && e.keyCode === 13) {
+      e.preventDefault()
+      this.sendMessage()
+    }
   }
 
   render = () => (
@@ -22,13 +29,14 @@ class Write extends Component {
       className="Write"
       onSubmit={e => {
         e.preventDefault()
-        this.sendMessage(this.state.message)
+        this.sendMessage()
     }}>
 
       <textarea 
         required
         value={this.state.message}
         onChange={e => this.updateMessage(e.target.value)}
+        onKeyDown={e => this.altEnterSubmit(e)}
       ></textarea>
 
       <div className="buttons" >

@@ -15,6 +15,7 @@ body {
   align-items: center;
   font-size: 1.25rem;
   border-style: solid;
+  border-bottom-style: none;
   width: 20rem;
   padding-bottom: 10%;
   background-color: #fff; 
@@ -50,7 +51,6 @@ body {
   display: flex;
   justify-content: center;
   border-style: solid;
-  border-top-style: none;
   width: 20rem;
   height: 3rem;
   background-color: #0069ed;
@@ -132,6 +132,7 @@ button:focus {
   width: 35%;
   height: 100%;
   border-style: solid;
+  border-left-style: none;
   background-color: #fff;
 }
 
@@ -217,4 +218,8 @@ button:focus {
 
 .invalid-input {
   background-color: pink;
+}
+
+textarea {
+  resize: none;
 }
