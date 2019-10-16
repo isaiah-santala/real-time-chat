@@ -10,28 +10,21 @@ class SignUp extends Component {
       username: '',
       password1: '',
       password2: '',
-      usernameIsValid: true
+      usernameIsValid: false
     }
   }
 
   usernameIsValid = () => this.setState({ usernameIsValid: true })
 
-  handleChange = e => {
+  handleChange = ({ target }) => this.setState({ [target.id]: target.value })
 
-    const { id, value } = e.target
+  handleChangeUserName = ({ target }) => this.setState({
+    [target.id]: target.value,
+    usernameIsValid: false
+  }, () => checkIfUsernameIsValid(this.state.username, this.usernameIsValid))
 
-    if (id === 'username') this.setState({
-      [id]: value,
-      usernameIsValid: false
-    }, () => checkIfUsernameIsValid(this.state.username, this.usernameIsValid))
-
-    else this.setState({
-      [id]: value,
-    })
-  }
-
-  handleSubmit = credentials => {
-    if (credentials.password1 !== credentials.password2) alert('passwords must match')
+  handleSubmit = (credentials) => {
+    if (credentials.password1 !== credentials.password2) alert('passwords must match') 
     else this.props.handleLogin('NEW', credentials)
   }
 
@@ -58,9 +51,9 @@ class SignUp extends Component {
           id='username'
           type="text"
           autoComplete="username"
-          className={!this.state.usernameIsValid ? 'invalid-input' : ''}
+          className={this.state.usernameIsValid ? 'valid-input' : ''}
           value={this.state.username}
-          onChange={this.handleChange}
+          onChange={this.handleChangeUserName}
         ></input>
 
         <label htmlFor="password1">password</label>

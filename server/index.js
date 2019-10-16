@@ -45,6 +45,8 @@ io.on('connect', (socket) => {
 
   socket.on('verify username is unique', username => {
 
+    if (username.length === 0) return null
+
     selectByUsername(username, (err, response) => {
       if (err) console.log('err while checking for username in db, err:' + err)
       if (!response) socket.emit('username is available')
