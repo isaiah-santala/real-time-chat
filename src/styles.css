@@ -1,3 +1,8 @@
+* {
+  border-width: 0.05rem;
+  border-color: rgba(98, 98, 98, 0.787);
+}
+
 body {
   margin: 0%;
   background-color: rgb(251, 251, 251);
@@ -120,7 +125,7 @@ body {
   display: flex;
   justify-content: flex-end;
   padding-right: 10rem;
-  box-shadow: 5px 5px 5px black;
+  box-shadow: 2px 2px 2px grey;
 }
 
 
@@ -129,6 +134,8 @@ body {
   height: 100%;
   border-style: solid;
   background-color: #fff;
+  border-bottom-left-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
 }
 
 .Lobby {
@@ -137,6 +144,8 @@ body {
   border-style: solid;
   border-left-style: none;
   background-color: #fff;
+  border-bottom-right-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
 .lobby-title {
@@ -149,7 +158,7 @@ body {
   height: 3rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-bottom-style: solid;
+  border-top-right-radius: 0.15rem;
 }
 
 .lobby-users {
@@ -179,7 +188,7 @@ body {
   height: 3rem;
   background-color: #0069ed;
   font-size: 2rem;
-  border-bottom-style: solid;
+  border-top-left-radius: 0.25rem;
 }
 
 .Display {
@@ -234,4 +243,5 @@ body {
 
 textarea {
   resize: none;
+  border-radius: 0.25rem;
 }
